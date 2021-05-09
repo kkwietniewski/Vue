@@ -4,23 +4,39 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example</title>
+    <title>Components Vue</title>
 </head>
 <body>
-    <div id="app">
-        {{hello}}
+    <div id="todo-list-app">
+        <ol>
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>
+        </ol>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
     <script>
-        const App = {
-            data(){
+        const ToDoList = {
+            data() {
                 return {
-                    hello: 'Hello'
+                    groceryList: [
+                        {id: 0, text: 'Vegetables'},
+                        {id: 1, text: 'Cheese'},
+                        {id: 2, text: 'Whatever else humans are supposed to eat'}
+                    ]
                 }
             }
         }
 
-        Vue.createApp(App).mount('#app');
+        const app = Vue.createApp(ToDoList);
+        app.component('todo-item', {
+            props: ['todo'],
+            template: `<li>{{todo.text}}</li>`
+        });
+        
+        app.mount('#todo-list-app');
     </script>
 </body>
 </html>
